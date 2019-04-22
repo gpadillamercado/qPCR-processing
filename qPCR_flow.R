@@ -2,7 +2,7 @@ library(tidyverse)
 library(readxl)
 
 # Loads in the Dataset
-qPCRm <- read_excel("more_qPCR.xls", sheet = "Results", skip = 7,
+qPCRm <- read_excel("qPCR_testData.xls", sheet = "Results", skip = 7,
   .name_repair = "unique", na = c("Undetermined", "NTC"))
 # Look into .name_repair
 
@@ -24,9 +24,10 @@ names(qPCRm)[4] <- "Target"
 qPCRm$Target <- qPCRm$Target %>% toupper()
 
 
-#Test dataset
+# Test dataset for simple test
+# Intend to upload a minimal but sufficiently complex test dataset
 df <- tibble(
-  Sample = c( rep("WT", 6), rep("mut", 6) ),
+  Sample = c( rep("WT", 6), rep("Mut", 6) ),
   Number = rep( c("1" , "2"), 6),
   Target = rep( c("Ref", "Exp1", "Exp1", "Exp2", "Ref", "Exp2"), 2),
   Ct = c( 
@@ -78,7 +79,7 @@ df <- df %>% ungroup() %>%
 # Returns pvalue, degrees of freedom, variances of both samples, and t.test method
 # Updated from summarize_each, that function is deprecated
 Sample1 <- "WT"
-Sample2 <- "miR31"
+Sample2 <- "Mut"
 
 df %>%
   group_by(Target) %>%
